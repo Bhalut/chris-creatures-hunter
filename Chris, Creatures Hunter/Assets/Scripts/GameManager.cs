@@ -34,9 +34,10 @@ public class GameManager : MonoBehaviour
     Text textTypeName;                                                          //Citizen or Zombie name text.
     Text textYouDied;                                                           //Game Over text.
     Hero hero;                                                                  //Variable containing the class Hero.
-
+    GameObject item;
     Image visualHealth;
     Image visualAmmo;
+    //Animator anim;
 
     /// <summary>
     /// Start this instance.
@@ -54,6 +55,8 @@ public class GameManager : MonoBehaviour
         visualHealth = GameObject.Find("Health").GetComponent<Image>();
         panelUI = GameObject.Find("PanelDialogueObject");
         buttonReturn = GameObject.Find("Return");
+        //item = Instantiate(Resources.Load("Items", typeof(GameObject))) as GameObject;
+        //anim = GetComponent<Animator>();
         textYouDied.enabled = false;
         panelDead.enabled = false;
         panelUI.SetActive(false);
@@ -105,6 +108,32 @@ public class GameManager : MonoBehaviour
                     zombieText.text = "Zombie: " + zombieCount.ToString();
                 }
             }
+        }
+
+        for (int i = 0; i < 10; i++)
+        {
+            item = Instantiate(Resources.Load("Cube", typeof(GameObject))) as GameObject;
+            Vector3 pos = new Vector3(Random.Range(-30, 30), 0, Random.Range(-30, 30));     //we initialize a variable of type "Vector3", in which we will place a random position for each cube, (so they will have different coordinates).
+            item.transform.position = pos;
+
+            switch(spawn)
+            {
+                case 0:
+                    item.name = "Health";
+                    item.gameObject.tag = "Health";
+                    item.GetComponentInChildren<Renderer>().material.color = Color.red;
+                    item.GetComponentInChildren<Animator>().Play("Item");
+                    break;
+                case 1:
+                    item.name = "Ammo";
+                    item.gameObject.tag = "Ammo";
+                    item.GetComponentInChildren<Renderer>().material.color = Color.yellow;
+                    item.GetComponentInChildren<Animator>().Play("Item");
+                    break;
+                default:
+                    goto case 0;
+            }
+            spawn = Random.Range(0, 2);
         }
     }
 
@@ -228,19 +257,6 @@ public class GameManager : MonoBehaviour
     {
         visualAmmo.fillAmount = (hero.Ammo * 1) / 10;
         visualAmmo.color = Color.Lerp(Color.red, Color.yellow, (hero.Ammo * 1) / 10);
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Health"))
-        {
-            other.gameObject.SetActive(false);
-            hero.Health += 50;
-        }else if (other.gameObject.CompareTag("Ammo"))
-        {
-            other.gameObject.SetActive(false);
-            hero.Health += 50;
-        }
     }
 }
 

@@ -33,6 +33,22 @@ public class Hero : MonoBehaviour
         get { return ammo; }
         set { ammo = value; }
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Health"))
+        {
+            other.gameObject.SetActive(false);
+            health += 50;
+            if (health > 100) health = 100;
+        }
+        else if (other.gameObject.CompareTag("Ammo"))
+        {
+            other.gameObject.SetActive(false);
+            ammo += 5;
+            if (ammo > 10) ammo = 10;
+        }
+    }
 }
 
 public class MoveSpeed                                                          //Class MoveSpeed, that contains the speed of the hero.

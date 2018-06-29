@@ -14,11 +14,11 @@ namespace NPC
     {
         GameManager _gameManager;
         Zombie zombie;
-        public float closeDistance = 5.0F;
-        public float speed;
-        public float dist;
-        public int age;
-        public State _state;
+        protected float closeDistance = 5.0F;
+        protected float speed;
+        protected float dist;
+        protected int age;
+        protected State _state;
         float rotateSpeed;
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace NPC
                             transform.position = Vector3.MoveTowards(transform.position, go.transform.position, (speed * Time.deltaTime));
                             if (dist <= 2f && go.GetComponent<Hero>())
                             {
-                                zombie.Damage();
+                                zombie.Damage(2, 20);
                             }else if (dist <= 2f && go.GetComponent<Citizen>())
                             {
                                 zombie.Convert(go);

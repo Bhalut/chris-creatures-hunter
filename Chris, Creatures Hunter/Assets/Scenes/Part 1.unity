@@ -728,8 +728,6 @@ MonoBehaviour:
   citizenCount: 0
   zombieCount: 0
   isDead: 0
-  visualHealth: {fileID: 1532798752}
-  visualAmmo: {fileID: 1083614726}
 --- !u!1 &1532798752
 GameObject:
   m_ObjectHideFlags: 0

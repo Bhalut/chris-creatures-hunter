@@ -10,7 +10,7 @@ namespace NPC                                                                   
         /// This class contains the zombie's information, such as his taste (what he wants to eat),
         /// and if they touch Citizen they turn it into a Zombie.
         /// </summary>
-        public sealed class Zombie : Npc
+        public class Zombie : Npc
         {
             public ZombieData _zombieData;                                      //Variable containing the struct of the zombie.
             GameManager _gameManager;                                           //Variable containing the class GameManager.
@@ -49,12 +49,12 @@ namespace NPC                                                                   
                 return _zombieData;
             }
 
-            public void Damage()
+            public void Damage(float t, int d)
             {
                 if (timeLeft <= 0)
                 {
-                    hero.Health -= 20;
-                    timeLeft = 2f;
+                    hero.Health -= d;
+                    timeLeft = t;
                 }
             }
 
